@@ -1,0 +1,18 @@
+stages:
+  - lint
+
+golang linter:
+  variables:
+    GOLANGCI_LINT_URL:  https://gitlab.com/mts-teta-public/devops-tools/-/raw/master/.golangci.yml
+  image: registry.gitlab.com/gitlab-org/gitlab-build-images:golangci-lint-alpine
+  stage: lint
+  allow_failure: true
+  script:
+    - wget -O .golangci.yml $GOLANGCI_LINT_URL
+    - cat .golangci.yml
+    - GOOS=linux GOARCH=amd64 golangci-lint run --issues-exit-code 0 --out-format code-climate | tee gl-code-quality-report.json | jq -r '.[] | "\(.location.path):\(.location.lines.begin) \(.description)"'
+  artifacts:
+    reports:
+      codequality: gl-code-quality-report.json
+    paths:
+      - gl-code-quality-report.json

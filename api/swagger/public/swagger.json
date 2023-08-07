@@ -1,0 +1,74 @@
+{
+    "schemes": [
+        "http"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "API for auth-service",
+        "title": "Auth API",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/login": {
+            "post": {
+                "security": [
+                    {
+                        "BasicAuth": []
+                    }
+                ],
+                "description": "Выполняет авторизацию пользователя",
+                "tags": [
+                    "login"
+                ],
+                "summary": "Log in",
+                "operationId": "login",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "Required parameters not filled",
+                        "schema": {}
+                    },
+                    "403": {
+                        "description": "Insufficient rights to perform the operation",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/verify": {
+            "post": {
+                "description": "Выполняет проверку токенов пользователя, которые получает из cookies после выполнения /login запроса",
+                "tags": [
+                    "verify"
+                ],
+                "summary": "Verify",
+                "operationId": "verify",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "403": {
+                        "description": "Insufficient rights to perform the operation",
+                        "schema": {}
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "BasicAuth": {
+            "type": "basic"
+        }
+    }
+}

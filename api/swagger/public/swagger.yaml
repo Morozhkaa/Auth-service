@@ -1,0 +1,50 @@
+basePath: /
+host: localhost:3000
+info:
+  contact: {}
+  description: API for auth-service
+  title: Auth API
+  version: "1.0"
+paths:
+  /login:
+    post:
+      description: Выполняет авторизацию пользователя
+      operationId: login
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "400":
+          description: Required parameters not filled
+          schema: {}
+        "403":
+          description: Insufficient rights to perform the operation
+          schema: {}
+      security:
+      - BasicAuth: []
+      summary: Log in
+      tags:
+      - login
+  /verify:
+    post:
+      description: Выполняет проверку токенов пользователя, которые получает из cookies
+        после выполнения /login запроса
+      operationId: verify
+      responses:
+        "200":
+          description: Success
+          schema:
+            type: string
+        "403":
+          description: Insufficient rights to perform the operation
+          schema: {}
+      summary: Verify
+      tags:
+      - verify
+schemes:
+- http
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

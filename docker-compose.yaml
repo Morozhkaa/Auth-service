@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  auth:
+    build:
+      context: . # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    environment: # Pass environment variables to the service
+      - HTTP_PORT=3000
+      - IS_PROD=false
+      - SALT=b9PDPbt4
+      - SECRET=secret
+      - LEVEL=debug
+      - DSN=https://b90ccf5ce9514de88ab2166dd3696827@o4503908933566464.ingest.sentry.io/4503908956766208
+      - PROBES_PORT=3030
+      - SERVICE_NAME=auth
+      - JAEGER_ADDRESS=http://jaeger-instance-collector.observability:14268/api/traces
+      - JAEGER_PORT=9000
+      - IS_DEBUG=false
+      - DB_URL=mongodb://localhost:27017/
+      - DB_USED=false
